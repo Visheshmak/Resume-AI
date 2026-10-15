@@ -1,0 +1,1 @@
+Job description processing will normalize requirements and evidence separately from candidate facts. The current API stores the original job description text and creates queued analyses without fake extraction results.

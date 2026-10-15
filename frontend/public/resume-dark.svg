@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" role="img" aria-labelledby="title desc">
+  <title id="title">Resume before optimization</title>
+  <desc id="desc">A dark resume analysis preview with sparse evidence signals.</desc>
+  <rect width="1600" height="1000" fill="#07111f"/>
+  <rect x="90" y="80" width="1420" height="840" rx="28" fill="#0d1b2a" stroke="#203548" stroke-width="3"/>
+  <rect x="150" y="145" width="610" height="30" rx="15" fill="#64748b"/>
+  <rect x="150" y="205" width="420" height="18" rx="9" fill="#334155"/>
+  <rect x="150" y="285" width="560" height="10" rx="5" fill="#334155"/>
+  <rect x="150" y="315" width="470" height="10" rx="5" fill="#334155"/>
+  <rect x="150" y="345" width="510" height="10" rx="5" fill="#334155"/>
+  <rect x="150" y="425" width="280" height="22" rx="11" fill="#475569"/>
+  <rect x="150" y="475" width="610" height="14" rx="7" fill="#243447"/>
+  <rect x="150" y="505" width="530" height="14" rx="7" fill="#243447"/>
+  <rect x="150" y="535" width="580" height="14" rx="7" fill="#243447"/>
+  <rect x="860" y="145" width="560" height="580" rx="22" fill="#101f31" stroke="#294156" stroke-width="3"/>
+  <text x="920" y="215" fill="#cbd5e1" font-family="Arial,sans-serif" font-size="28" font-weight="700">ATS signal</text>
+  <text x="920" y="285" fill="#94a3b8" font-family="Arial,sans-serif" font-size="22">Match quality</text>
+  <text x="1260" y="285" fill="#f59e0b" font-family="Arial,sans-serif" font-size="32" font-weight="700">48</text>
+  <rect x="920" y="315" width="390" height="16" rx="8" fill="#243447"/>
+  <rect x="920" y="315" width="187" height="16" rx="8" fill="#f59e0b"/>
+  <text x="920" y="405" fill="#94a3b8" font-family="Arial,sans-serif" font-size="22">Evidence gaps</text>
+  <circle cx="935" cy="460" r="8" fill="#f87171"/><rect x="965" y="451" width="300" height="16" rx="8" fill="#334155"/>
+  <circle cx="935" cy="510" r="8" fill="#f87171"/><rect x="965" y="501" width="245" height="16" rx="8" fill="#334155"/>
+  <circle cx="935" cy="560" r="8" fill="#f87171"/><rect x="965" y="551" width="340" height="16" rx="8" fill="#334155"/>
+  <rect x="860" y="770" width="560" height="100" rx="18" fill="#13283a"/>
+  <text x="920" y="830" fill="#94a3b8" font-family="Arial,sans-serif" font-size="21">Before ResumeIQ recommendations</text>
+</svg>

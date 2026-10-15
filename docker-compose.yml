@@ -1,0 +1,95 @@
+services:
+  db:
+    image: pgvector/pgvector:pg16
+    container_name: resumeiq-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: resumeiq
+      POSTGRES_USER: resumeiq
+      POSTGRES_PASSWORD: resumeiq
+    ports:
+      - "5432:5432"
+    volumes:
+      - resumeiq-postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U resumeiq -d resumeiq"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  redis:
+    image: redis:7-alpine
+    container_name: resumeiq-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  api:
+    build:
+      context: ./backend
+    container_name: resumeiq-api
+    restart: unless-stopped
+    environment:
+      APP_ENV: ${APP_ENV:-development}
+      DATABASE_URL: postgresql+asyncpg://resumeiq:${POSTGRES_PASSWORD:-resumeiq-dev-only}@db:5432/resumeiq
+      JWT_SECRET_KEY: ${JWT_SECRET_KEY:-replace-me-with-a-random-32-byte-key}
+      CORS_ORIGINS: '["http://localhost:5173"]'
+      ALLOWED_HOSTS: '["localhost","127.0.0.1","api"]'
+      LLM_PROVIDER: ${LLM_PROVIDER:-stub}
+      LLM_API_KEY: ${LLM_API_KEY:-}
+      REDIS_URL: redis://redis:6379/0
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    ports:
+      - "8000:8000"
+    volumes:
+      - resumeiq-uploads:/app/data/uploads
+
+  worker:
+    build:
+      context: ./backend
+    container_name: resumeiq-worker
+    restart: unless-stopped
+    command: ["python", "-m", "app.workers.runner"]
+    environment:
+      APP_ENV: ${APP_ENV:-development}
+      DATABASE_URL: postgresql+asyncpg://resumeiq:${POSTGRES_PASSWORD:-resumeiq-dev-only}@db:5432/resumeiq
+      JWT_SECRET_KEY: ${JWT_SECRET_KEY:-replace-me-with-a-random-32-byte-key}
+      REDIS_URL: redis://redis:6379/0
+      LLM_PROVIDER: ${LLM_PROVIDER:-stub}
+      LLM_API_KEY: ${LLM_API_KEY:-}
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    volumes:
+      - resumeiq-uploads:/app/data/uploads
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  web:
+    build:
+      context: ./frontend
+    container_name: resumeiq-web
+    restart: unless-stopped
+    depends_on:
+      api:
+        condition: service_healthy
+    ports:
+      - "5173:80"
+
+volumes:
+  resumeiq-postgres:
+  resumeiq-uploads:

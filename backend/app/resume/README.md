@@ -1,0 +1,1 @@
+Resume processing is intentionally staged. Upload validation and secure storage are implemented in `app/services/file_validation.py`; PDF/DOCX text extraction and structured fact extraction will be added as asynchronous workers without inventing candidate facts.

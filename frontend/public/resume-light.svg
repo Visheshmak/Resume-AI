@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" role="img" aria-labelledby="title desc">
+  <title id="title">Resume after optimization</title>
+  <desc id="desc">A light resume analysis preview with stronger evidence signals.</desc>
+  <rect width="1600" height="1000" fill="#e2e8f0"/>
+  <rect x="90" y="80" width="1420" height="840" rx="28" fill="#f8fafc" stroke="#cbd5e1" stroke-width="3"/>
+  <rect x="150" y="145" width="610" height="30" rx="15" fill="#0f766e"/>
+  <rect x="150" y="205" width="420" height="18" rx="9" fill="#64748b"/>
+  <rect x="150" y="285" width="560" height="10" rx="5" fill="#94a3b8"/>
+  <rect x="150" y="315" width="470" height="10" rx="5" fill="#94a3b8"/>
+  <rect x="150" y="345" width="510" height="10" rx="5" fill="#94a3b8"/>
+  <rect x="150" y="425" width="280" height="22" rx="11" fill="#0f766e"/>
+  <rect x="150" y="475" width="610" height="14" rx="7" fill="#64748b"/>
+  <rect x="150" y="505" width="530" height="14" rx="7" fill="#64748b"/>
+  <rect x="150" y="535" width="580" height="14" rx="7" fill="#64748b"/>
+  <rect x="860" y="145" width="560" height="580" rx="22" fill="#ffffff" stroke="#cbd5e1" stroke-width="3"/>
+  <text x="920" y="215" fill="#0f172a" font-family="Arial,sans-serif" font-size="28" font-weight="700">ATS signal</text>
+  <text x="920" y="285" fill="#64748b" font-family="Arial,sans-serif" font-size="22">Match quality</text>
+  <text x="1260" y="285" fill="#0f766e" font-family="Arial,sans-serif" font-size="32" font-weight="700">88</text>
+  <rect x="920" y="315" width="390" height="16" rx="8" fill="#dbe4e9"/>
+  <rect x="920" y="315" width="343" height="16" rx="8" fill="#14b8a6"/>
+  <text x="920" y="405" fill="#64748b" font-family="Arial,sans-serif" font-size="22">Evidence signals</text>
+  <circle cx="935" cy="460" r="8" fill="#14b8a6"/><rect x="965" y="451" width="300" height="16" rx="8" fill="#94a3b8"/>
+  <circle cx="935" cy="510" r="8" fill="#14b8a6"/><rect x="965" y="501" width="245" height="16" rx="8" fill="#94a3b8"/>
+  <circle cx="935" cy="560" r="8" fill="#14b8a6"/><rect x="965" y="551" width="340" height="16" rx="8" fill="#94a3b8"/>
+  <rect x="860" y="770" width="560" height="100" rx="18" fill="#ccfbf1"/>
+  <text x="920" y="830" fill="#0f766e" font-family="Arial,sans-serif" font-size="21">After evidence-backed improvements</text>
+</svg>
