@@ -19,4 +19,5 @@ async def test_readiness() -> None:
         response = await client.get("/api/v1/health/ready")
 
     assert response.status_code == 200
-    assert response.json() == {"status": "ready"}
+    assert response.json()["status"] == "ready"
+    assert response.json()["database"] == "ok"

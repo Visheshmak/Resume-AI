@@ -69,3 +69,10 @@ async def auth_headers(client, registered_user):
     response = await client.post("/api/v1/auth/login", json={"email": "jordan@example.com", "password": "correct-horse-battery"})
     assert response.status_code == 200
     return {"Authorization": f"Bearer {response.json()['access_token']}"}
+
+
+@pytest.fixture(autouse=True)
+def use_test_database_everywhere(monkeypatch):
+    """Point code paths that open their own sessions (readiness probe, background worker) at the test database."""
+    monkeypatch.setattr("app.api.routes.health.engine", test_engine)
+    monkeypatch.setattr("app.workers.analysis_worker.AsyncSessionLocal", TestSessionLocal)

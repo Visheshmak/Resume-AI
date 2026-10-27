@@ -45,8 +45,12 @@ async def test_resume_upload_job_analysis_and_dashboard(client, auth_headers):
 
     analysis = await client.post("/api/v1/analysis", headers=auth_headers, json={"resume_id": resume["id"], "job_description_id": job.json()["id"]})
     assert analysis.status_code == 202
-    assert analysis.json()["status"] == "completed"
-    assert analysis.json()["score_summary"]["overall_match"] >= 0
+    assert analysis.json()["status"] in {"queued", "completed"}
+
+    completed = await client.get(f"/api/v1/analysis/{analysis.json()['id']}", headers=auth_headers)
+    assert completed.status_code == 200
+    assert completed.json()["status"] == "completed"
+    assert completed.json()["score_summary"]["overall_match"] >= 0
 
     evidence = await client.get(f"/api/v1/analysis/{analysis.json()['id']}/evidence", headers=auth_headers)
     assert evidence.status_code == 200
