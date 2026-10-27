@@ -1,5 +1,12 @@
 # ResumeIQ
 
+[![CI](https://github.com/Visheshmak/Resume-AI/actions/workflows/ci.yml/badge.svg)](https://github.com/Visheshmak/Resume-AI/actions/workflows/ci.yml)
+![Python](https://img.shields.io/badge/Python-3.12-3776AB?logo=python&logoColor=white)
+![FastAPI](https://img.shields.io/badge/FastAPI-009688?logo=fastapi&logoColor=white)
+![React](https://img.shields.io/badge/React_19-20232A?logo=react&logoColor=61DAFB)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?logo=postgresql&logoColor=white)
+![Redis](https://img.shields.io/badge/Redis-DC382D?logo=redis&logoColor=white)
+
 ResumeIQ is an evidence-first AI resume intelligence platform. It parses resumes and job descriptions into structured data, compares requirements deterministically, and makes every important finding traceable to source evidence.
 
 ## Product promise
@@ -68,8 +75,8 @@ flowchart LR
 
 ### Environment
 
-```powershell
-Copy-Item .env.example .env
+```bash
+cp .env.example .env   # PowerShell: Copy-Item .env.example .env
 ```
 
 Set a unique `JWT_SECRET_KEY` and database password before any shared or production deployment. Never commit `.env` or provider keys.
@@ -91,7 +98,7 @@ Important variables:
 
 ### One-command Docker startup
 
-```powershell
+```bash
 docker compose up --build
 ```
 
@@ -105,15 +112,15 @@ The Compose stack starts PostgreSQL, runs Alembic migrations in the API containe
 
 ### Manual development
 
-```powershell
+```bash
 docker compose up -d db
 ```
 Start the API:
 
-```powershell
+```bash
 cd backend
 python -m venv .venv
-.\.venv\Scripts\Activate.ps1
+source .venv/bin/activate   # Windows: .\.venv\Scripts\Activate.ps1
 pip install -e ".[dev]"
 alembic upgrade head
 uvicorn app.main:app --reload --port 8000
@@ -121,8 +128,9 @@ uvicorn app.main:app --reload --port 8000
 
 Start the frontend:
 
-```powershell
+```bash
 cd frontend
+npm install
 npm run dev
 ```
 
@@ -167,18 +175,21 @@ Primary resources:
 
 Backend lint and tests:
 
-```powershell
+```bash
 cd backend
 python -m ruff check app tests migrations
 python -m pytest -q
 ```
 
-Frontend production build:
+Frontend unit tests and production build:
 
-```powershell
+```bash
 cd frontend
+npm test
 npm run build
 ```
+
+Both suites run on every push and pull request via GitHub Actions (`.github/workflows/ci.yml`).
 
 The backend tests cover authentication, upload validation, extraction, JD parsing, matching, authorization, evidence persistence, AI schema validation, provider errors, timeouts, request IDs, secure headers, rate limiting, and the critical workflow using an isolated SQLite database.
 
