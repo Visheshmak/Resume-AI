@@ -1,4 +1,5 @@
 import io
+from pathlib import Path
 
 import pytest
 from docx import Document
@@ -83,3 +84,16 @@ async def test_file_validation_and_authorization(client, auth_headers):
 
     hidden = await client.get(f"/api/v1/resumes/{valid_docx.json()['id']}", headers=other_headers)
     assert hidden.status_code == 404
+
+
+@pytest.mark.asyncio
+async def test_malformed_pdf_is_rejected_and_not_stored(client, auth_headers, tmp_path):
+    from app.core.config import settings
+
+    response = await client.post(
+        "/api/v1/resumes/upload",
+        headers=auth_headers,
+        files={"file": ("resume.pdf", b"%PDF-not actually a PDF", "application/pdf")},
+    )
+    assert response.status_code == 422
+    assert not [path for path in Path(settings.upload_dir).rglob("*") if path.is_file()]
