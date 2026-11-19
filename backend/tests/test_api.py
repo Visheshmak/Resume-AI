@@ -1,4 +1,5 @@
 import io
+from pathlib import Path
 
 import pytest
 from docx import Document
@@ -45,8 +46,12 @@ async def test_resume_upload_job_analysis_and_dashboard(client, auth_headers):
 
     analysis = await client.post("/api/v1/analysis", headers=auth_headers, json={"resume_id": resume["id"], "job_description_id": job.json()["id"]})
     assert analysis.status_code == 202
-    assert analysis.json()["status"] == "completed"
-    assert analysis.json()["score_summary"]["overall_match"] >= 0
+    assert analysis.json()["status"] in {"queued", "completed"}
+
+    completed = await client.get(f"/api/v1/analysis/{analysis.json()['id']}", headers=auth_headers)
+    assert completed.status_code == 200
+    assert completed.json()["status"] == "completed"
+    assert completed.json()["score_summary"]["overall_match"] >= 0
 
     evidence = await client.get(f"/api/v1/analysis/{analysis.json()['id']}/evidence", headers=auth_headers)
     assert evidence.status_code == 200
@@ -79,3 +84,16 @@ async def test_file_validation_and_authorization(client, auth_headers):
 
     hidden = await client.get(f"/api/v1/resumes/{valid_docx.json()['id']}", headers=other_headers)
     assert hidden.status_code == 404
+
+
+@pytest.mark.asyncio
+async def test_malformed_pdf_is_rejected_and_not_stored(client, auth_headers, tmp_path):
+    from app.core.config import settings
+
+    response = await client.post(
+        "/api/v1/resumes/upload",
+        headers=auth_headers,
+        files={"file": ("resume.pdf", b"%PDF-not actually a PDF", "application/pdf")},
+    )
+    assert response.status_code == 422
+    assert not [path for path in Path(settings.upload_dir).rglob("*") if path.is_file()]

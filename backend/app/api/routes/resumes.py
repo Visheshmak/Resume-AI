@@ -26,7 +26,7 @@ async def upload_resume(
     staged = await validate_and_stage_upload(file)
     try:
         extraction, extracted_text = ResumeIntelligenceEngine().parse_bytes(staged.content, staged.extension)
-    except (OSError, ValueError, RuntimeError) as exc:
+    except Exception as exc:
         staged.safe_path.unlink(missing_ok=True)
         from fastapi import HTTPException
         raise HTTPException(status_code=422, detail="The resume could not be parsed") from exc

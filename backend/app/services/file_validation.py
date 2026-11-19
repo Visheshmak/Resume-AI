@@ -34,7 +34,7 @@ async def validate_and_stage_upload(upload: UploadFile) -> ValidatedUpload:
     if extension == ".docx" and not _is_valid_docx(content):
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="File is not a valid DOCX document")
 
-        safe_path = ObjectStorageService().upload(content, extension.removeprefix("."))
+    safe_path = ObjectStorageService().upload(content, extension.removeprefix("."))
     return ValidatedUpload(content, extension.removeprefix("."), safe_path, original_filename)
 
 
